@@ -8,8 +8,8 @@ search engine architecture. Also, the implementation of the base model
 Please simply use this repo as a reference!
 
 = Installation
-* npm install
+* `npm install`
 
 = Usage
-* npm run start
+* `npm run start`
 * Open any brower, enter the url: localhost:3000/playground to test out the GraphQL API.
