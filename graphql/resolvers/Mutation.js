@@ -3,12 +3,11 @@ import fs from "fs";
 import uuidv4 from "uuid/v4";
 import { UserInputError } from 'apollo-server-express';
 
-import getObjectByUid from "./utilities/getObjectByUid";
-import contactBooks from "../../data/contact_books";
+import Person from "../models/Person";
+import ContactBook from "../models/ContactBook";
+
 import people from "../../data/people";
 
-const getPersonByUid = uid => getObjectByUid(people, uid);
-const getContactBookByUid = uid => getObjectByUid(contactBooks, uid);
 const savePeople = people => {
   fs.writeFile("data/people.json", JSON.stringify(people, null, 2), err => {
     if(err) {
@@ -21,13 +20,13 @@ const savePeople = people => {
 
 const personBuilder = {
   uid: () => uuidv4(),
-  contactBookId: input => input.contactBookId,
-  firstName: input => input.person.personalInformation.name.firstName,
-  lastName: input => input.person.personalInformation.name.lastName,
-  gender: input => input.person.personalInformation.gender,
-  birthday: input => find(
-    input.person.personalInformation.memorableDates,
-    memorableDate => memorableDate.type == "BIRTHDAY"
+  contactBookId: ({ contactBookId }) => contactBookId,
+  firstName: ({ person }) => person.personalInformation.name.firstName,
+  lastName: ({ person }) => person.personalInformation.name.lastName,
+  gender: ({ person }) => person.personalInformation.gender,
+  birthday: ({ person }) => find(
+    person.personalInformation.memorableDates,
+    ({ type }) => type == "BIRTHDAY"
   ).date.format("YYYY-MM-DD")
 };
 
@@ -49,7 +48,7 @@ const buildObject = (builder, input) => reduce(
 
 export default {
   addPerson(_, input) {
-    if (!getContactBookByUid(input.contactBookId)) {
+    if (!ContactBook.findBy({ uid: input.contactBookId })) {
       throw new UserInputError("Contact book does not exist!");
     }
 
@@ -60,13 +59,13 @@ export default {
     return person;
   },
 
-  removePerson(_, input) {
-    if (!getPersonByUid(input.personId)) {
+  removePerson(_, { personId }) {
+    if (!Person.findBy({ uid: personId })) {
       throw new UserInputError("Person does not exist!");
     }
 
-    savePeople(reject(people, person => person.uid == input.personId));
+    savePeople(reject(people, ({ uid }) => uid == personId));
 
-    return input.personId;
+    return personId;
   }
 };

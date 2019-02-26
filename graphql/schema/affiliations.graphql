@@ -36,7 +36,4 @@ input OrganizationNameQuery {
 
 input AffiliationQuery {
   organizationName: OrganizationNameQuery
-  # ,
-  # at: Date,
-  # title: String
 }

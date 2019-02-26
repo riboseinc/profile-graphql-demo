@@ -9,5 +9,4 @@ type Person {
 
 input PersonInput {
   personalInformation: PersonalInformationInput
-  # affiliations: [AffiliationInput]
 }

@@ -1,0 +1,15 @@
+= Introduction
+This repo serves the purpose of a demo of the profile GraphQL API.
+
+Currently it's implemented in es6 with flat files as JSON without any database or
+search engine architecture. Also, the implementation of the base model
+(in graphql/models/Model.js) is yet completed.
+
+Please simply use this repo as a reference!
+
+= Installation
+* npm install
+
+= Usage
+* npm run start
+* Open any brower, enter the url: localhost:3000/playground to test out the GraphQL API.

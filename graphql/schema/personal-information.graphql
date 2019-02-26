@@ -12,7 +12,6 @@ type PersonalName {
 
 type MemorableDate {
   date: Date!
-  # time: Time
   type: MemorableDateType!
   description: String
 }
@@ -34,7 +33,6 @@ enum MemorableDateType {
 
 input MemorableDateQuery {
   date: Date
-  # time: Time
   type: MemorableDateType
   description: String
 }
@@ -58,7 +56,6 @@ input PersonalNameInput {
 
 input MemorableDateInput {
   date: Date
-  # time: Time
   type: MemorableDateType
   description: String
 }

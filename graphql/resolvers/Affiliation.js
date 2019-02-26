@@ -1,12 +1,8 @@
-import organizations from "../../data/organizations";
-
-import { find } from "lodash";
-
-const getOrganizationByUid = uid => find(organizations, organization => organization.uid == uid);
+import Organization from "../models/Organization";
 
 export default {
-  organizations: obj => {
-    let organization = getOrganizationByUid(obj.organizationId)
+  organizations: ({ organizationId: uid }) => {
+    let organization = Organization.findBy({ uid });
 
     return organization ? [organization] : [];
   },
